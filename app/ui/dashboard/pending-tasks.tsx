@@ -1,4 +1,3 @@
-import { useCurrentUser } from "@/app/hooks/use-current-user";
 import { fetchPendingTasksByUser } from "@/app/lib/data";
 import { auth } from "@/auth";
 import PendingTaskCard from "./pending-task-card";
@@ -13,7 +12,7 @@ export default async function PendingTasks() {
 	if (!session?.user) return null;
 
 	return (
-		<div className="flex flex-col bg-white py-7 px-5 rounded-2xl gap-3 flex-1">
+		<div className="flex flex-col bg-white py-7 px-5 rounded-2xl gap-3 flex-1 min-w-0 overflow-hidden">
 			<div className="flex justify-between items-center">
 				<h1 className="text-2xl font-bold">Recent To Do Tasks</h1>
 				<div>
@@ -26,7 +25,7 @@ export default async function PendingTasks() {
 				</div>
 			</div>
 			<div
-				className={`flex flex-col flex-1 ${pendingTasks.length === 0 ? "justify-center" : ""}`}
+				className={`flex flex-col flex-1 w-full ${pendingTasks.length === 0 ? "justify-center" : ""}`}
 			>
 				{pendingTasks.length === 0 ? (
 					<div className="font-bold text-center">No tasks for today 🎉</div>

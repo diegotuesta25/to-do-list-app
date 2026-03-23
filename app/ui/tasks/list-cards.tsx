@@ -3,15 +3,14 @@ import Card from "./card";
 
 type ListCardsProps = {
 	tasks: Tasks[];
+	currentUserId: number;
 };
 
-export default function ListCards({ tasks }: ListCardsProps) {
+export default function ListCards({ tasks, currentUserId }: ListCardsProps) {
 	return (
 		<div>
 			{tasks.map(task => (
-				<div key={task.id}>
-					<Card task={task} />
-				</div>
+				<Card key={task.id} task={task} currentUserId={currentUserId} />
 			))}
 		</div>
 	);

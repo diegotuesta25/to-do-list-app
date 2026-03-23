@@ -10,11 +10,13 @@ type TasksListProps = {
 export default async function TasksList({ query }: TasksListProps) {
 	const session = await auth();
 
+	const currentUserId = Number(session?.user?.id);
+
 	if (!session?.user?.email) {
 		throw new Error("User not authenticated");
 	}
 
-	const tasks = await fetchTasksByUser(Number(session.user.id), query);
+	const tasks = await fetchTasksByUser(currentUserId, query);
 	const inProgressTasks = tasks.filter(t => t.status === "in_progress");
 	const pendingTasks = tasks.filter(t => t.status === "pending");
 	const doneTasks = tasks.filter(t => t.status === "done");
@@ -23,15 +25,15 @@ export default async function TasksList({ query }: TasksListProps) {
 		<div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
 			<div className="">
 				<ButtonStatus status="in_progress" />
-				<ListCards tasks={inProgressTasks} />
+				<ListCards tasks={inProgressTasks} currentUserId={currentUserId} />
 			</div>
 			<div>
 				<ButtonStatus status="pending" />
-				<ListCards tasks={pendingTasks} />
+				<ListCards tasks={pendingTasks} currentUserId={currentUserId} />
 			</div>
 			<div>
 				<ButtonStatus status="done" />
-				<ListCards tasks={doneTasks} />
+				<ListCards tasks={doneTasks} currentUserId={currentUserId} />
 			</div>
 		</div>
 	);

@@ -13,18 +13,20 @@ export default function PendingTaskCard({ task }: PendingTaskCardProps) {
 	const deleteTaskWithId = deleteTask.bind(null, task.id);
 
 	return (
-		<div className="flex justify-between px-4 py-5 items-center border-b-2 border-gray-200 w-full gap-4">
+		<div className="flex justify-between px-4 py-5 items-center border-b-2 border-gray-200 gap-4 min-w-0">
 			<Link
 				href={`/dashboard/tasks/edit/${task.id}`}
-				className="flex justify-between items-center flex-1"
+				className="flex flex-col flex-1 min-w-0"
 			>
-				<div className="flex flex-col gap-1">
-					<div className="flex gap-1">
-						<Bars3BottomLeftIcon className="w-5 h-5 text-gray-400" />
-						<p className="text-sm font-semibold text-gray-400">{task.type}</p>
-					</div>
-					<h1 className="text-lg font-bold">{task.title}</h1>
+				<div className="flex gap-1 items-center">
+					<Bars3BottomLeftIcon className="w-4 h-4 md:w-5 md:h-5 text-gray-400 shrink-0" />
+					<p className="text-xs font-semibold text-gray-400 truncate">
+						{task.type}
+					</p>
 				</div>
+				<h1 className="text-sm md:text-lg font-bold truncate">{task.title}</h1>
+			</Link>
+			<div className="flex w-44 gap-2 items-center justify-end">
 				<div
 					className={clsx(
 						"border rounded-lg px-2 py-1 flex items-center gap-1",
@@ -52,12 +54,10 @@ export default function PendingTaskCard({ task }: PendingTaskCardProps) {
 					</svg>
 					{formatTaskStatus(task.status)}
 				</div>
-			</Link>
-			<div className="flex gap-2 items-center">
 				<form action={deleteTaskWithId}>
 					<button
 						type="submit"
-						className="text-left p-2 rounded-full hover:bg-gray-300 hover:border-gray-400 hover:shadow-gray-900 hover:shadow-xs cursor-pointer"
+						className="text-left p-2 rounded-full  hover:bg-gray-300 hover:border-gray-400 hover:shadow-gray-900 hover:shadow-xs cursor-pointer"
 					>
 						<TrashIcon className="w-5 h-5 rounded-lg  shadow-lg" />
 					</button>

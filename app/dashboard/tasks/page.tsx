@@ -3,6 +3,8 @@ import { Metadata } from "next";
 import Link from "next/link";
 import TasksList from "@/app/ui/tasks/tasks-list";
 import Search from "@/app/ui/tasks/search";
+import { Suspense } from "react";
+import { TasksListSkeleton } from "@/app/ui/skeletons";
 
 export const metadata: Metadata = {
 	title: "Tasks",
@@ -33,7 +35,9 @@ export default async function Tasks(props: {
 					</Link>
 				</div>
 			</div>
-			<TasksList query={query} />
+			<Suspense key={query} fallback={<TasksListSkeleton />}>
+				<TasksList query={query} />
+			</Suspense>
 		</div>
 	);
 }

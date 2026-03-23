@@ -31,3 +31,6 @@ export const handleInput = (e: any) => {
 	el.style.height = "auto";
 	el.style.height = el.scrollHeight + "px";
 };
+
+export const sleep = (ms: number) =>
+	new Promise(resolve => setTimeout(resolve, ms));

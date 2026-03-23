@@ -11,24 +11,22 @@ import clsx from "clsx";
 import Link from "next/link";
 import { deleteTask } from "@/app/lib/actions";
 import { useState } from "react";
-import { useCurrentUser } from "@/app/hooks/use-current-user";
 
 export type CardProps = {
 	task: Tasks;
+	currentUserId: number;
 };
 
-export default function Card({ task }: CardProps) {
+export default function Card({ task, currentUserId }: CardProps) {
 	const [open, setOpen] = useState(false);
 	const deleteTaskWithId = deleteTask.bind(null, task.id);
-	const currentUser = useCurrentUser().user;
 
 	const orderedUsers = [...task.users].sort((a, b) => {
-		if (a.id === currentUser?.id) return -1;
-		if (b.id === currentUser?.id) return 1;
+		if (a.id === currentUserId) return -1;
+		if (b.id === currentUserId) return 1;
 		return 0;
 	});
 
-	if (!currentUser) return null;
 	return (
 		<div
 			className={clsx(
@@ -46,11 +44,9 @@ export default function Card({ task }: CardProps) {
 			)}
 		>
 			<div className="flex items-center justify-between mb-3 min-w-0">
-				<div>
-					<p className="bg-white rounded-4xl text-gray-600 font-bold text-sm py-1.5 px-2.5 min-h-7 min-w-7">
-						{formatTaskStatus(task.type)}
-					</p>
-				</div>
+				<p className="bg-white rounded-4xl text-gray-600 font-bold text-sm py-1.5 px-2.5 min-h-7 min-w-7 truncate">
+					{formatTaskStatus(task.type)}
+				</p>
 				<form action={deleteTaskWithId}>
 					<button
 						type="button"
