@@ -8,6 +8,7 @@ import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import DescriptionInput from "./description-input";
 import { editTask, State } from "@/app/lib/actions";
+import { toast } from "sonner";
 
 type FormProps = {
 	users: UserFromTask[];
@@ -27,7 +28,9 @@ export default function Form({ users, task }: FormProps) {
 	const router = useRouter();
 
 	useEffect(() => {
-		if (state?.message === "success") router.back();
+		if (state?.message === "success") {
+			router.back();
+		}
 	}, [state, router]);
 
 	const handleAddUser = (id: number) => {

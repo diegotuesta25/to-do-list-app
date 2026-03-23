@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { inter } from "./ui/fonts";
 import "./ui/globals.css";
 import Providers from "./providers";
+import { Toaster } from "sonner";
+import NextTopLoader from "nextjs-toploader";
 
 export const metadata: Metadata = {
 	title: {
@@ -19,7 +21,11 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={`${inter.className} antialiased`}>
-				<Providers>{children}</Providers>
+				<Providers>
+					<NextTopLoader color="#E982FF" showSpinner={false} />
+					{children}
+					<Toaster />
+				</Providers>
 			</body>
 		</html>
 	);

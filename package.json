@@ -17,9 +17,11 @@
     "heic2any": "^0.0.4",
     "next": "16.1.6",
     "next-auth": "5.0.0-beta.30",
+    "nextjs-toploader": "^3.9.17",
     "postgres": "^3.4.8",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "sonner": "^2.0.7",
     "use-debounce": "^10.1.0",
     "zod": "4.1.13-beta.0"
   },

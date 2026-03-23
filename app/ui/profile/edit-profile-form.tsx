@@ -5,6 +5,7 @@ import { defaultImage } from "@/app/lib/utils";
 import { updateUser } from "@/app/lib/actions";
 import { useQueryClient } from "@tanstack/react-query";
 import imageCompression from "browser-image-compression";
+import { toast } from "sonner";
 
 type ProfileFormProps = {
 	user: any;
@@ -64,16 +65,17 @@ export default function ProfileForm({ user, onEdit }: ProfileFormProps) {
 
 	useEffect(() => {
 		if (state?.message === "success") {
-			queryClient.setQueryData(["current-user"], (old: any) => ({
-				...old,
-				image: image,
-			}));
-
-			queryClient.invalidateQueries({ queryKey: ["current-user"] });
-
-			onEdit();
+			toast.success("User updated successfully!!", {
+				style: {
+					background: "#59C26D",
+					color: "white",
+				},
+			});
+			queryClient.invalidateQueries({ queryKey: ["current-user"] }).then(() => {
+				onEdit();
+			});
 		}
-	}, [state, queryClient, image, onEdit]);
+	}, [state, queryClient, onEdit]);
 
 	useEffect(() => {
 		return () => {
