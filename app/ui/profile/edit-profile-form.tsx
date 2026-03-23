@@ -23,7 +23,7 @@ export default function ProfileForm({ user, onEdit }: ProfileFormProps) {
 		const file = e.target.files?.[0];
 		if (!file) return;
 
-		setError(null); // reset
+		setError(null);
 
 		const name = file.name.toLowerCase();
 		const type = file.type?.toLowerCase() || "";
@@ -154,7 +154,7 @@ export default function ProfileForm({ user, onEdit }: ProfileFormProps) {
 								<input
 									type="file"
 									name="file"
-									accept="image/png, image/jpeg, image/webp"
+									accept="image/png, image/jpeg, image/webp, image/heic, image/heif"
 									className="hidden"
 									onChange={handleFileUpload}
 								/>
