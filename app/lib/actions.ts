@@ -201,7 +201,6 @@ export async function updateUser(
 
 	let photoUrl = formData.get("photo_url") as string;
 
-	console.log("Foto God", photoUrl);
 	if (file && file.size > 0) {
 		const data = new FormData();
 		data.append("file", file);
@@ -220,7 +219,6 @@ export async function updateUser(
 		photoUrl = uploadedImageURL.secure_url;
 	}
 
-	console.log("Foto ya pasada", photoUrl);
 	try {
 		await sql`
 			UPDATE users

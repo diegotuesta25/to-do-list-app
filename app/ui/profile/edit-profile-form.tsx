@@ -154,7 +154,7 @@ export default function ProfileForm({ user, onEdit }: ProfileFormProps) {
 								<input
 									type="file"
 									name="file"
-									accept="image/png, image/jpeg, image/webp, image/heic"
+									accept="image/png, image/jpeg, image/webp"
 									className="hidden"
 									onChange={handleFileUpload}
 								/>
