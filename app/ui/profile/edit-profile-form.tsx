@@ -4,6 +4,7 @@ import { useActionState, useEffect, useState } from "react";
 import { defaultImage } from "@/app/lib/utils";
 import { updateUser } from "@/app/lib/actions";
 import { useQueryClient } from "@tanstack/react-query";
+import imageCompression from "browser-image-compression";
 
 type ProfileFormProps = {
 	user: any;
@@ -16,27 +17,43 @@ export default function ProfileForm({ user, onEdit }: ProfileFormProps) {
 	const [state, formAction] = useActionState(updateUserWithId, initialState);
 	const queryClient = useQueryClient();
 	const [image, setImage] = useState(defaultImage);
+	const [error, setError] = useState<string | null>(null);
 
-	const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
-
 		if (!file) return;
 
+		setError(null); // reset
+
+		const name = file.name.toLowerCase();
+		const type = file.type?.toLowerCase() || "";
+
 		const isHeic =
-			file.type === "image/heic" ||
-			file.type === "image/heif" ||
-			file.name.toLowerCase().endsWith(".heic") ||
-			file.name.toLowerCase().endsWith(".heif");
+			name.endsWith(".heic") ||
+			name.endsWith(".heif") ||
+			type.includes("heic") ||
+			type.includes("heif") ||
+			type === "";
 
 		if (isHeic) {
-			alert(
-				"iPhone images (.HEIC) are not supported. Please convert to JPG or PNG.",
-			);
+			setError("iPhone HEIC images are not supported. Use JPG or PNG.");
+			e.target.value = "";
 			return;
 		}
 
-		const preview = URL.createObjectURL(file);
-		setImage(preview);
+		try {
+			const compressedFile = await imageCompression(file, {
+				maxSizeMB: 1,
+				maxWidthOrHeight: 1024,
+				useWebWorker: true,
+			});
+
+			const preview = URL.createObjectURL(compressedFile);
+			setImage(preview);
+		} catch (err) {
+			console.error(err);
+			setError("Something went wrong processing the image.");
+		}
 	};
 
 	useEffect(() => {
@@ -137,7 +154,7 @@ export default function ProfileForm({ user, onEdit }: ProfileFormProps) {
 								<input
 									type="file"
 									name="file"
-									accept="image/png, image/jpeg, image/webp"
+									accept="image/png, image/jpeg, image/webp, image/heic"
 									className="hidden"
 									onChange={handleFileUpload}
 								/>
@@ -153,6 +170,7 @@ export default function ProfileForm({ user, onEdit }: ProfileFormProps) {
 						</div>
 					</div>
 				</div>
+				{error && <p className="text-red-500 text-sm text-center">{error}</p>}
 			</div>
 		</form>
 	);
