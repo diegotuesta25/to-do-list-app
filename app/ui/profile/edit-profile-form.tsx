@@ -6,6 +6,7 @@ import { defaultImage } from "@/app/lib/utils";
 import { updateUser } from "@/app/lib/actions";
 import { useQueryClient } from "@tanstack/react-query";
 import { UserFromTask } from "@/app/lib/definitions";
+import imageCompression from "browser-image-compression";
 
 type ProfileFormProps = {
 	user: any;
@@ -19,13 +20,24 @@ export default function ProfileForm({ user, onEdit }: ProfileFormProps) {
 	const queryClient = useQueryClient();
 	const [image, setImage] = useState(defaultImage);
 
-	const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
-
 		if (!file) return;
 
-		const preview = URL.createObjectURL(file);
-		setImage(preview);
+		const options = {
+			maxSizeMB: 1,
+			maxWidthOrHeight: 1024,
+			useWebWorker: true,
+		};
+
+		try {
+			const compressedFile = await imageCompression(file, options);
+
+			const preview = URL.createObjectURL(compressedFile);
+			setImage(preview);
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	useEffect(() => {
