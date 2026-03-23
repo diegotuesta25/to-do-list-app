@@ -48,6 +48,7 @@ export default function SignupForm() {
 					id="password"
 					type="password"
 					name="password"
+					minLength={6}
 					placeholder="Enter password"
 					required
 				/>
