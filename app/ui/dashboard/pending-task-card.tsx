@@ -29,7 +29,7 @@ export default function PendingTaskCard({ task }: PendingTaskCardProps) {
 			<div className="flex w-44 gap-2 items-center justify-end">
 				<div
 					className={clsx(
-						"border rounded-lg px-2 py-1 flex items-center gap-1",
+						"border rounded-lg px-2 py-1 flex items-center gap-1 text-sm md:text-base ",
 						{
 							"border-yellow-300 bg-yellow-100 text-yellow-500":
 								task.status === "pending",

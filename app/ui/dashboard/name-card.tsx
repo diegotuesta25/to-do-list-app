@@ -19,7 +19,7 @@ export default function NameCard() {
 		<div className="flex bg-white px-5 py-7 rounded-2xl items-center gap-4 justify-between">
 			<div className="flex flex-col gap-1">
 				<h1 className=" text-xl md:text-2xl font-semibold">
-					Good Morning, {currentUser.name}
+					Good Morning, {currentUser.name.split(" ")[0]}
 				</h1>
 				<p className="text-sm font-medium md:text-base text-gray-400 ">
 					What do you plan to do today?

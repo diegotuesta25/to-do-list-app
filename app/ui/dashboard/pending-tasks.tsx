@@ -12,14 +12,14 @@ export default async function PendingTasks() {
 	if (!session?.user) return null;
 
 	return (
-		<div className="flex flex-col bg-white py-7 px-5 rounded-2xl gap-3 flex-1 min-w-0 overflow-hidden">
+		<div className="flex flex-col bg-white py-7 px-5 rounded-2xl gap-1 md:gap-3 flex-1 min-w-0 overflow-hidden">
 			<div className="flex justify-between items-center">
-				<h1 className="text-2xl font-bold">Recent To Do Tasks</h1>
+				<h1 className="text-lg md:text-2xl font-bold">Recent To Do Tasks</h1>
 				<div>
 					<Link href="/dashboard/tasks/create">
 						<button className="flex text-gray-500 font-medium bg-gray-200 gap-3 rounded-xl items-center justify-center px-3 py-2 cursor-pointer">
 							<PlusIcon className="w-5" />
-							<p className="">Add Task</p>
+							<p className="text-sm md:text-base">Add Task</p>
 						</button>
 					</Link>
 				</div>
