@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import postgres from "postgres";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { AuthError } from "next-auth";
 import { signIn } from "@/auth";
 import { redirect } from "next/navigation";
