@@ -10,8 +10,8 @@ export default async function CreateTaskModal() {
 	const users = await fetchUsers();
 
 	return (
-		<div className="fixed inset-x-0 bottom-0 top-36 md:inset-0 md:bg-black/40 md:flex md:items-center md:justify-center ">
-			<div className="bg-white w-full h-full p-6 md:rounded-xl md:max-w-2xl md:h-auto md:max-h-[80vh] md:overflow-y-auto">
+		<div className="fixed inset-0 z-50 bg-black/40 flex justify-center items-center overflow-auto p-4">
+			<div className="w-full h-full md:h-auto md:max-h-[80vh] md:max-w-2xl bg-white rounded-xl overflow-y-auto p-6">
 				<Form users={users} />
 			</div>
 		</div>
