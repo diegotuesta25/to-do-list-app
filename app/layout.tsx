@@ -22,7 +22,7 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={`${inter.className} antialiased`}>
 				<Providers>
-					<NextTopLoader color="#E982FF" showSpinner={false} />
+					<NextTopLoader color="#E982FF" height={3} showSpinner={false} />
 					{children}
 					<Toaster />
 				</Providers>

@@ -10,6 +10,7 @@ import StatusInput from "./status-input";
 import CategoryInput from "./category-input";
 import PeopleSelector from "./people-selector";
 import { useCurrentUser } from "@/app/hooks/use-current-user";
+import SubmitButton from "./submit-button";
 
 export default function Form({ users }: { users: UserFromTask[] }) {
 	const user = useCurrentUser().user;
@@ -70,12 +71,7 @@ export default function Form({ users }: { users: UserFromTask[] }) {
 					>
 						Cancel
 					</button>
-					<button
-						type="submit"
-						className="min-w-24 px-3 py-2 rounded-xl bg-blue-500 shadow-sm shadow-blue-900 cursor-pointer"
-					>
-						Save
-					</button>
+					<SubmitButton />
 				</div>
 			</div>
 		</form>

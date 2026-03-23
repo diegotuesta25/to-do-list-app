@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import DescriptionInput from "./description-input";
 import { editTask, State } from "@/app/lib/actions";
 import { toast } from "sonner";
+import SubmitButton from "./submit-button";
 
 type FormProps = {
 	users: UserFromTask[];
@@ -67,12 +68,7 @@ export default function Form({ users, task }: FormProps) {
 					>
 						Cancel
 					</button>
-					<button
-						type="submit"
-						className="min-w-24 px-3 py-2 rounded-xl bg-blue-500 shadow-sm shadow-blue-900 cursor-pointer"
-					>
-						Save
-					</button>
+					<SubmitButton />
 				</div>
 			</div>
 		</form>
