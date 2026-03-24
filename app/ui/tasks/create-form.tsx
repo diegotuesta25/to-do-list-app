@@ -71,7 +71,7 @@ export default function Form({ users }: { users: UserFromTask[] }) {
 					>
 						Cancel
 					</button>
-					<SubmitButton />
+					<SubmitButton type="save-task" />
 				</div>
 			</div>
 		</form>

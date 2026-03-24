@@ -68,7 +68,7 @@ export default function Form({ users, task }: FormProps) {
 					>
 						Cancel
 					</button>
-					<SubmitButton />
+					<SubmitButton type="save-task" />
 				</div>
 			</div>
 		</form>

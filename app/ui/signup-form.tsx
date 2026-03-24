@@ -1,7 +1,7 @@
 "use client";
-import Link from "next/link";
 import { createUser, UserState } from "../lib/actions";
 import { useActionState } from "react";
+import SubmitButton from "./tasks/submit-button";
 
 export default function SignupForm() {
 	const initialState: UserState = { message: null, errors: {} };
@@ -54,12 +54,7 @@ export default function SignupForm() {
 				/>
 			</div>
 
-			<button
-				type="submit"
-				className="w-full px-5 py-2 font-bold border rounded-xl bg-black text-white hover:bg-gray-500 transition cursor-pointer focus:ring-black focus:ring-2"
-			>
-				Submit
-			</button>
+			<SubmitButton type="sign-up" />
 		</form>
 	);
 }

@@ -11,17 +11,17 @@ export default function Home() {
 				<Image
 					src="/home-desktop.jpg"
 					fill
+					alt="Desktop Image"
 					className="object-cover hidden md:block"
-					alt="Desktop Version"
 					priority
-				/>
+				></Image>
 				<Image
 					src="/home-mobile.jpg"
 					fill
+					alt="Desktop Image"
 					className="object-cover block md:hidden"
-					alt="Mobile Version"
 					priority
-				/>
+				></Image>
 			</div>
 			<div className="flex flex-col flex-1 items-center justify-between md:w-1/2">
 				<div className="my-10 md:mt-20">
