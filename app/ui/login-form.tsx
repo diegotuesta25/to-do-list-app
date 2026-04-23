@@ -1,9 +1,13 @@
 "use client";
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useActionState } from "react";
 import { authenticate } from "../lib/actions";
-import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
+import {
+	ExclamationCircleIcon,
+	EyeIcon,
+	EyeSlashIcon,
+} from "@heroicons/react/24/outline";
+import { useToggle } from "../hooks/use-toggle";
 
 export default function LoginForm() {
 	const searchParams = useSearchParams();
@@ -12,6 +16,7 @@ export default function LoginForm() {
 		authenticate,
 		undefined,
 	);
+	const { isOpen, toggle, setIsOpen } = useToggle(false);
 	return (
 		<form
 			action={formAction}
@@ -34,14 +39,29 @@ export default function LoginForm() {
 			{/* Password */}
 			<div className="grid grid-cols-1 gap-1">
 				<label className="text-sm font-medium text-gray-900">Password</label>
-				<input
-					className="w-full rounded-xl border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black"
-					id="password"
-					type="password"
-					name="password"
-					placeholder="Enter password"
-					required
-				/>
+				<div className="relative">
+					<input
+						className="w-full rounded-xl border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-black"
+						id="password"
+						type={isOpen ? "text" : "password"}
+						name="password"
+						placeholder="Enter password"
+						required
+					/>
+					<button className="cursor-pointer" onClick={toggle} type="button">
+						{isOpen ? (
+							<EyeSlashIcon
+								width={25}
+								className="absolute right-4 top-2 text-gray-700"
+							/>
+						) : (
+							<EyeIcon
+								width={25}
+								className="absolute right-4 top-2 text-gray-700"
+							/>
+						)}
+					</button>
+				</div>
 			</div>
 			<input type="hidden" name="redirectTo" value={callbackUrl} />
 			<button

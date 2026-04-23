@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import LogoToDoList from "../todolist-logo";
+import LogoToDoList from "../task-logo";
 import NavLinks from "./nav-links";
 import { PowerIcon } from "@heroicons/react/24/outline";
 import { signOutAction } from "@/app/lib/actions";

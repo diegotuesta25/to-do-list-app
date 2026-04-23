@@ -24,7 +24,7 @@ export default function LogoToDoList({
 			<h1
 				className={`${poppins.className}  ${textClassName || "text-xl md:text-3xl "} `}
 			>
-				To Do List App
+				Taskboard App
 			</h1>
 		</div>
 	);

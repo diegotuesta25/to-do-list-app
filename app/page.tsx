@@ -1,5 +1,5 @@
 import Image from "next/image";
-import LogoToDoList from "./ui/todolist-logo";
+import LogoToDoList from "./ui/task-logo";
 import LoginForm from "./ui/login-form";
 import Link from "next/link";
 import { Suspense } from "react";

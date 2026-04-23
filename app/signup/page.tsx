@@ -1,6 +1,6 @@
 import Image from "next/image";
 import SignupForm from "../ui/signup-form";
-import LogoToDoList from "../ui/todolist-logo";
+import LogoToDoList from "../ui/task-logo";
 import Link from "next/link";
 
 export default function Page() {

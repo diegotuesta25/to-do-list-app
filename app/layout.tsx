@@ -7,10 +7,10 @@ import NextTopLoader from "nextjs-toploader";
 
 export const metadata: Metadata = {
 	title: {
-		template: "%s | To Do List App",
-		default: "To Do List App",
+		template: "%s | Taskboard App",
+		default: "Taskboard App",
 	},
-	description: "You can make your to do list here",
+	description: "You can manage your tasks here",
 };
 
 export default function RootLayout({
