@@ -20,6 +20,7 @@ export default function LogoToDoList({
 				height={50}
 				alt="Logo"
 				className={`object-contain ${imageClassName || ""}`}
+				priority
 			/>
 			<h1
 				className={`${poppins.className}  ${textClassName || "text-xl md:text-3xl "} `}

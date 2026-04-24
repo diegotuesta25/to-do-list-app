@@ -36,6 +36,7 @@ export default async function Dashboard() {
 					height={1000}
 					alt="Dashboard Photo"
 					className="rounded-2xl h-full w-full object-cover"
+					priority
 				/>
 			</div>
 		</>
