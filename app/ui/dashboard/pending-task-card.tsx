@@ -56,6 +56,7 @@ export default function PendingTaskCard({ task }: PendingTaskCardProps) {
 				</div>
 				<form action={deleteTaskWithId}>
 					<button
+						aria-label="Delete task"
 						type="submit"
 						className="text-left p-2 rounded-full  hover:bg-gray-300 hover:border-gray-400 hover:shadow-gray-900 hover:shadow-xs cursor-pointer"
 					>

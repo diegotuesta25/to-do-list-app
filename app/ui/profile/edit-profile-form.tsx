@@ -163,6 +163,7 @@ export default function ProfileForm({ user, onEdit }: ProfileFormProps) {
 							</label>
 
 							<button
+								aria-label="Delete photo"
 								onClick={() => setImage(defaultImage)}
 								type="button"
 								className="border border-gray-500 rounded-full cursor-pointer hover:bg-red-300 p-2 hover:text-red-800"

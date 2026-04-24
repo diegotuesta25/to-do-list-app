@@ -48,19 +48,32 @@ export default function LoginForm() {
 						placeholder="Enter password"
 						required
 					/>
-					<button className="cursor-pointer" onClick={toggle} type="button">
-						{isOpen ? (
+
+					{isOpen ? (
+						<button
+							aria-label="Show password"
+							className="cursor-pointer"
+							onClick={toggle}
+							type="button"
+						>
 							<EyeSlashIcon
 								width={25}
 								className="absolute right-4 top-2 text-gray-700"
 							/>
-						) : (
+						</button>
+					) : (
+						<button
+							aria-label="Hid password"
+							className="cursor-pointer"
+							onClick={toggle}
+							type="button"
+						>
 							<EyeIcon
 								width={25}
 								className="absolute right-4 top-2 text-gray-700"
 							/>
-						)}
-					</button>
+						</button>
+					)}
 				</div>
 			</div>
 			<input type="hidden" name="redirectTo" value={callbackUrl} />

@@ -6,18 +6,20 @@ import Link from "next/link";
 export default function Page() {
 	return (
 		<div className="flex bg-gray-50 min-h-screen flex-col md:flex-row-reverse">
-			<div className="relative h-64 w-full md:h-auto md:w-1/2">
+			<div className="relative h-36 w-full md:h-auto md:w-1/2">
 				<Image
 					src="/home-desktop.jpg"
 					fill
 					alt="Desktop Image"
+					sizes="(max-width: 768px) 0px, 50vw"
 					className="object-cover hidden md:block"
 					priority
 				></Image>
 				<Image
 					src="/home-mobile.jpg"
 					fill
-					alt="Desktop Image"
+					alt="Mobile Image"
+					sizes="(max-width: 768px) 100vw, 0px"
 					className="object-cover block md:hidden"
 					priority
 				></Image>
