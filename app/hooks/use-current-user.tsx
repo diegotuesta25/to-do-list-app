@@ -3,14 +3,9 @@
 import { useQuery } from "@tanstack/react-query";
 
 async function fetchUser() {
-	const res = await fetch("/api/me", {
-		cache: "no-store",
-	});
-
-	if (!res.ok) {
-		throw new Error("Failed to fetch user");
-	}
-
+	const res = await fetch("/api/me");
+	if (res.status === 401) return null;
+	if (!res.ok) throw new Error("Failed to fetch user");
 	return res.json();
 }
 

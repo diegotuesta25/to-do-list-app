@@ -1,8 +1,9 @@
+import { UserFromTask } from "@/app/lib/definitions";
 import { defaultImage } from "@/app/lib/utils";
 import Image from "next/image";
 
 type ProfileProps = {
-	user: any;
+	user: UserFromTask;
 	onEdit: () => void;
 };
 
@@ -11,7 +12,7 @@ export default function Profile({ user, onEdit }: ProfileProps) {
 		<div className="p-6 md:overflow-y-auto md:p-12">
 			<div className="flex justify-between items-center">
 				<div>
-					<p className="font-bold text-3xl">Profile</p>
+					<h1 className="font-bold text-3xl">Profile</h1>
 					<p className="text-sm text-gray-500">Set your account details.</p>
 				</div>
 
@@ -62,7 +63,7 @@ export default function Profile({ user, onEdit }: ProfileProps) {
 
 				<div className="flex flex-col gap-2 items-center">
 					<Image
-						src={user.image || defaultImage}
+						src={user.photo || defaultImage}
 						width={100000}
 						height={100000}
 						alt={user.name}

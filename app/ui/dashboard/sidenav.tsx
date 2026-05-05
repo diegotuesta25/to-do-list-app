@@ -4,7 +4,6 @@ import LogoToDoList from "../task-logo";
 import NavLinks from "./nav-links";
 import { PowerIcon } from "@heroicons/react/24/outline";
 import { signOutAction } from "@/app/lib/actions";
-import { useState } from "react";
 import { useCurrentUser } from "@/app/hooks/use-current-user";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -57,7 +56,7 @@ export default function SideNav() {
 						className="flex items-center gap-2 cursor-pointer "
 					>
 						<Image
-							src={currentUser.image || defaultImage}
+							src={currentUser.photo || defaultImage}
 							width={500}
 							height={500}
 							alt={currentUser.name}

@@ -6,9 +6,10 @@ import { updateUser } from "@/app/lib/actions";
 import { useQueryClient } from "@tanstack/react-query";
 import imageCompression from "browser-image-compression";
 import { toast } from "sonner";
+import { UserFromTask } from "@/app/lib/definitions";
 
 type ProfileFormProps = {
-	user: any;
+	user: UserFromTask;
 	onEdit: () => void;
 };
 
@@ -59,7 +60,7 @@ export default function ProfileForm({ user, onEdit }: ProfileFormProps) {
 
 	useEffect(() => {
 		if (user) {
-			setImage(user.image || defaultImage);
+			setImage(user.photo || defaultImage);
 		}
 	}, [user]);
 

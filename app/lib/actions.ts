@@ -1,23 +1,14 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import postgres from "postgres";
 import bcrypt from "bcryptjs";
 import { AuthError } from "next-auth";
 import { signIn } from "@/auth";
 import { redirect } from "next/navigation";
 import { signOut } from "@/auth";
 import { defaultImage } from "./utils";
-
-const globalForSql = global as unknown as { sql: ReturnType<typeof postgres> };
-
-export const sql =
-	globalForSql.sql ??
-	postgres(process.env.POSTGRES_URL!, {
-		max: 5, // limit connections
-	});
-
-if (process.env.NODE_ENV !== "production") globalForSql.sql = sql;
+import { sql } from "./db";
+import { SignupSchema } from "./schemas";
 
 //It would be better to be TaskState
 export type State = {
@@ -152,16 +143,12 @@ export async function editTask(
 }
 
 export async function deleteTask(id: number) {
-	await sql.begin(async (tx: any) => {
-		await tx`
-		DELETE FROM tasks
-		WHERE id = ${id}
-		`;
-
-		await tx`
-		DELETE FROM task_users
-		WHERE task_id = ${id}`;
-	});
+	try {
+		await sql`DELETE FROM tasks WHERE id = ${id}`;
+	} catch (error) {
+		console.error(error);
+		throw new Error("Failed to delete task");
+	}
 	revalidatePath("/dashboard/tasks");
 }
 
@@ -169,13 +156,22 @@ export async function createUser(
 	prevState: UserState,
 	formData: FormData,
 ): Promise<UserState> {
-	console.log(formData);
-	const name = (await formData.get("name")) as string;
-	const email = (await formData.get("email")) as string;
-	const password = (await formData.get("password")) as string;
-	const hashedPassword = await bcrypt.hash(password, 10);
+	const parsed = SignupSchema.safeParse({
+		name: formData.get("name"),
+		email: formData.get("email"),
+		password: formData.get("password"),
+	});
 
-	console.log(name, email, hashedPassword);
+	if (!parsed.success) {
+		console.log(parsed.success);
+		return {
+			message: "Please fix the errors below.",
+			errors: parsed.error.flatten().fieldErrors,
+		};
+	}
+
+	const { name, email, password } = parsed.data;
+	const hashedPassword = await bcrypt.hash(password, 10);
 
 	try {
 		await sql`
@@ -183,8 +179,11 @@ export async function createUser(
 			VALUES (${name},${email},${hashedPassword},${defaultImage})
 		`;
 	} catch (error) {
-		console.log(error);
-		throw new Error("Failed to create a user");
+		if ((error as { code?: string })?.code === "23505") {
+			return { errors: { email: ["This email is already registered."] } };
+		}
+		console.error("createUser failed", error);
+		return { message: "Something went wrong. Please try again." };
 	}
 	revalidatePath("/");
 	redirect("/");
@@ -199,7 +198,7 @@ export async function updateUser(
 	const email = (await formData.get("email")) as string;
 	const file = ((await formData.get("file")) as File) || null;
 
-	let photoUrl = formData.get("photo_url") as string;
+	let photo = formData.get("photo_url") as string;
 
 	if (file && file.size > 0) {
 		const data = new FormData();
@@ -216,7 +215,7 @@ export async function updateUser(
 		);
 
 		const uploadedImageURL = await res.json();
-		photoUrl = uploadedImageURL.secure_url;
+		photo = uploadedImageURL.secure_url;
 	}
 
 	try {
@@ -225,7 +224,7 @@ export async function updateUser(
 			SET
 				name = ${name},
 				email= ${email},
-				photo_url =${photoUrl}
+				photo_url =${photo}
 			WHERE id = ${id}
 		`;
 	} catch (error) {

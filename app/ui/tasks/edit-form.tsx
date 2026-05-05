@@ -22,9 +22,6 @@ export default function Form({ users, task }: FormProps) {
 	);
 	const initialState: State = { message: null, errors: {} };
 	const editTaskWithId = editTask.bind(null, task.id);
-	// const editTaskWithId = (prevState: State, formAction: FormData) => {
-	// 	return editTask(task.id, prevState, formAction);
-	// };
 	const [state, formAction] = useActionState(editTaskWithId, initialState);
 	const router = useRouter();
 
@@ -40,7 +37,7 @@ export default function Form({ users, task }: FormProps) {
 	};
 
 	const handleRemoveUser = (id: number) => {
-		setSelectedUsersId(prev => selectedUsersId.filter(userId => userId !== id));
+		setSelectedUsersId(prev => prev.filter(userId => userId !== id));
 	};
 
 	return (

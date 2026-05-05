@@ -4,23 +4,14 @@ import { authConfig } from "./auth.config";
 import { z } from "zod";
 import type { User } from "@/app/lib/definitions";
 import bcrypt from "bcryptjs";
-import postgres from "postgres";
-
-const globalForSql = global as unknown as { sql: ReturnType<typeof postgres> };
-
-export const sql =
-	globalForSql.sql ??
-	postgres(process.env.POSTGRES_URL!, {
-		max: 5, // limit connections
-	});
-
-if (process.env.NODE_ENV !== "production") globalForSql.sql = sql;
+import { sql } from "./app/lib/db";
 
 async function getUser(email: string): Promise<User | undefined> {
 	try {
 		const user = await sql<
 			User[]
 		>`SELECT id,password,name,email,photo_url as photo FROM users WHERE email=${email}`;
+		console.log(user);
 		return user[0];
 	} catch (error) {
 		console.error("Failed to fetch user:", error);
@@ -34,7 +25,10 @@ export const { auth, signIn, signOut } = NextAuth({
 		Credentials({
 			async authorize(credentials) {
 				const parsedCredentials = z
-					.object({ email: z.string().email(), password: z.string().min(6) })
+					.object({
+						email: z.string().trim().toLowerCase().email(),
+						password: z.string().min(6),
+					})
 					.safeParse(credentials);
 
 				if (parsedCredentials.success) {
@@ -47,7 +41,7 @@ export const { auth, signIn, signOut } = NextAuth({
 							id: user.id.toString(),
 							name: user.name,
 							email: user.email,
-							image: user.photo,
+							photo: user.photo,
 						};
 				}
 

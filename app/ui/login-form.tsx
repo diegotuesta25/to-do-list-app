@@ -38,7 +38,9 @@ export default function LoginForm() {
 			</div>
 			{/* Password */}
 			<div className="grid grid-cols-1 gap-1">
-				<label className="text-sm font-medium text-gray-900">Password</label>
+				<label htmlFor="password" className="text-sm font-medium text-gray-900">
+					Password
+				</label>
 				<div className="relative">
 					<input
 						className="w-full rounded-xl border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-black"

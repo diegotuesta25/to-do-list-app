@@ -3,6 +3,13 @@ import { useCurrentUser } from "@/app/hooks/use-current-user";
 import { UserIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 
+function getGreeting() {
+	const h = new Date().getHours();
+	if (h < 12) return "Good morning";
+	if (h < 18) return "Good afternoon";
+	return "Good evening";
+}
+
 export default function NameCard() {
 	const currentUser = useCurrentUser().user;
 
@@ -19,7 +26,7 @@ export default function NameCard() {
 		<div className="flex bg-white px-5 py-7 rounded-2xl items-center gap-4 justify-between">
 			<div className="flex flex-col gap-1">
 				<h1 className=" text-xl md:text-2xl font-semibold">
-					Good Morning, {currentUser.name.split(" ")[0]}
+					{getGreeting()}, {currentUser.name.split(" ")[0]}
 				</h1>
 				<p className="text-sm font-medium md:text-base text-gray-400 ">
 					What do you plan to do today?

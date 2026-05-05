@@ -1,4 +1,4 @@
-import { sql } from "@/app/lib/actions";
+import { sql } from "@/app/lib/db";
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 
@@ -8,16 +8,18 @@ export async function GET() {
 	const session = await auth();
 
 	if (!session?.user?.id) {
-		return NextResponse.json(null);
+		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 	}
 
-	const result = await sql`
-		SELECT id, name, email, photo_url as image
+	const [user] = await sql`
+		SELECT id, name, email, photo_url as photo
 		FROM users
 		WHERE id = ${session.user.id}
 	`;
 
-	const user = result[0];
+	if (!user) {
+		return NextResponse.json({ error: "Not found" }, { status: 404 });
+	}
 
 	return NextResponse.json(user);
 }

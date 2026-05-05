@@ -1,15 +1,5 @@
-import postgres from "postgres";
 import { TaskCount, TaskForm, Tasks, UserFromTask } from "./definitions";
-
-const globalForSql = global as unknown as { sql: ReturnType<typeof postgres> };
-
-export const sql =
-	globalForSql.sql ??
-	postgres(process.env.POSTGRES_URL!, {
-		max: 5, // limit connections
-	});
-
-if (process.env.NODE_ENV !== "production") globalForSql.sql = sql;
+import { sql } from "./db";
 
 export async function fetchTasksByUser(userId: number, query?: string | null) {
 	try {

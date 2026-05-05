@@ -22,7 +22,6 @@ export const formatDateToLocal = (
 };
 
 export const formatTaskStatus = (status: string) => {
-	// Cambia guion bajo por espacio y pone la primera letra en mayúscula
 	return status.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
 };
 
